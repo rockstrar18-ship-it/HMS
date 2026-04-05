@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Layout from './components/Layout';
+import Login, { LoggedInUser } from './components/Login';
 import Dashboard from './components/Dashboard';
 import Patients from './components/Patients';
 import Doctors from './components/Doctors';
@@ -69,6 +70,26 @@ const INITIAL_BILLS: Bill[] = [
 ];
 
 export default function App() {
+  // ── Auth State ──
+  const [currentUser, setCurrentUser] = useState<LoggedInUser | null>(() => {
+    try {
+      const saved = sessionStorage.getItem('hms_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch { return null; }
+  });
+
+  const handleLogin = (user: LoggedInUser) => {
+    setCurrentUser(user);
+    // Navigate to first allowed page after login
+    const first = user.allowedPages[0] || 'dashboard';
+    setActiveTab(first);
+  };
+
+  const handleLogout = () => {
+    sessionStorage.removeItem('hms_user');
+    setCurrentUser(null);
+  };
+
   const [activeTab, setActiveTab] = useState('dashboard');
   
   // State with LocalStorage persistence
@@ -269,8 +290,8 @@ export default function App() {
   const renderContent = () => {
     switch (activeTab) {
       case 'dashboard': return <Dashboard patients={patients} doctors={doctors} appointments={appointments} />;
-      case 'patients': return <Patients patients={patients} onAddPatient={handleAddPatient} />;
-      case 'doctors': return <Doctors doctors={doctors} onAddDoctor={handleAddDoctor} />;
+      case 'patients': return <Patients />;
+      case 'doctors': return <Doctors />;
       case 'staff': return <StaffManagement staff={staff} onAddStaff={handleAddStaff} />;
       case 'appointments': return <Appointments 
         appointments={appointments} 
@@ -281,7 +302,7 @@ export default function App() {
         onCancel={handleCancelAppointment}
       />;
       case 'billing': return <Billing bills={bills} patients={patients} onCreateInvoice={handleCreateInvoice} />;
-      case 'ipdopd': return <IPDOPD patients={patients} beds={beds} onAdmit={handleAdmit} onDischarge={handleDischarge} />;
+      case 'ipdopd': return <IPDOPD />;
       case 'beds': return <Beds beds={beds} />;
       case 'reports': return <Reports />;
       case 'pharmacy': return <Pharmacy inventory={inventory} onSell={handleSellMedicine} />;
@@ -293,8 +314,13 @@ export default function App() {
     }
   };
 
+  // Show login page if not authenticated
+  if (!currentUser) {
+    return <Login onLogin={handleLogin} />;
+  }
+
   return (
-    <Layout activeTab={activeTab} setActiveTab={setActiveTab}>
+    <Layout activeTab={activeTab} setActiveTab={setActiveTab} user={currentUser} onLogout={handleLogout}>
       {renderContent()}
     </Layout>
   );
