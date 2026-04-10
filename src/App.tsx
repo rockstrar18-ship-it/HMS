@@ -15,6 +15,7 @@ import Departments from './components/Departments';
 import IPDOPD from './components/IPDOPD';
 import Beds from './components/Beds';
 import Reports from './components/Reports';
+import Settings from './components/Settings';
 import { Patient, Doctor, Appointment, Bill, Staff, BloodDonor, PharmacyItem, LabTest, CanteenItem, Department, Bed } from './types';
 
 // Mock Initial Data
@@ -310,6 +311,7 @@ export default function App() {
       case 'lab': return <Laboratory tests={labTests} patients={patients} onRequestTest={handleRequestTest} />;
       case 'canteen': return <Canteen menu={canteenMenu} onAddItem={handleAddCanteenItem} />;
       case 'departments': return <Departments departments={departments} onAddDepartment={handleAddDepartment} />;
+      case 'settings': return <Settings />;
       default: return <Dashboard patients={patients} doctors={doctors} appointments={appointments} />;
     }
   };

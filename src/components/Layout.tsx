@@ -18,7 +18,8 @@ import {
   Bed,
   Stethoscope,
   BarChart3,
-  ShieldCheck
+  ShieldCheck,
+  Settings
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LoggedInUser } from './Login';
@@ -46,6 +47,7 @@ const ALL_MENU_ITEMS = [
   { id: 'canteen',     label: 'Canteen',          icon: Utensils },
   { id: 'departments', label: 'Departments',      icon: Layers },
   { id: 'reports',     label: 'Analytics',        icon: BarChart3 },
+  { id: 'settings',    label: 'Settings',          icon: Settings },
 ];
 
 export default function Layout({ children, activeTab, setActiveTab, user, onLogout }: LayoutProps) {

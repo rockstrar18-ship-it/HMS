@@ -38,6 +38,7 @@ const PAGE_NAME_TO_ROUTE: Record<string, string> = {
   'lab':              'lab',
   'canteen':          'canteen',
   'departments':      'departments',
+  'settings':         'settings',
 };
 
 function parsePages(pagesStr: string): string[] {
