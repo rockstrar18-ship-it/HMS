@@ -25,6 +25,7 @@ const ALL_PAGES = [
   { value: 'Canteen',         label: 'Canteen' },
   { value: 'Departments',     label: 'Departments' },
   { value: 'Analytics',       label: 'Analytics' },
+  { value: 'Duty Roster',     label: 'Duty Roster' },
   { value: 'Settings',        label: 'Settings' },
 ];
 

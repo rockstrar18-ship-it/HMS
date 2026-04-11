@@ -16,6 +16,7 @@ import IPDOPD from './components/IPDOPD';
 import Beds from './components/Beds';
 import Reports from './components/Reports';
 import Settings from './components/Settings';
+import Roster from './components/Roster';
 import { Patient, Doctor, Appointment, Bill, Staff, BloodDonor, PharmacyItem, LabTest, CanteenItem, Department, Bed } from './types';
 
 // Mock Initial Data
@@ -72,9 +73,10 @@ const INITIAL_BILLS: Bill[] = [
 
 export default function App() {
   // ── Auth State ──
+  // Read saved session from localStorage so user stays logged in across refreshes.
   const [currentUser, setCurrentUser] = useState<LoggedInUser | null>(() => {
     try {
-      const saved = sessionStorage.getItem('hms_user');
+      const saved = localStorage.getItem('hms_user');
       return saved ? JSON.parse(saved) : null;
     } catch { return null; }
   });
@@ -87,7 +89,7 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem('hms_user');
+    localStorage.removeItem('hms_user');
     setCurrentUser(null);
   };
 
@@ -311,6 +313,7 @@ export default function App() {
       case 'lab': return <Laboratory tests={labTests} patients={patients} onRequestTest={handleRequestTest} />;
       case 'canteen': return <Canteen menu={canteenMenu} onAddItem={handleAddCanteenItem} />;
       case 'departments': return <Departments departments={departments} onAddDepartment={handleAddDepartment} />;
+      case 'roster': return <Roster />;
       case 'settings': return <Settings />;
       default: return <Dashboard patients={patients} doctors={doctors} appointments={appointments} />;
     }

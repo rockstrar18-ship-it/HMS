@@ -19,7 +19,8 @@ import {
   Stethoscope,
   BarChart3,
   ShieldCheck,
-  Settings
+  Settings,
+  ClipboardList
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import { LoggedInUser } from './Login';
@@ -44,6 +45,7 @@ const ALL_MENU_ITEMS = [
   { id: 'bloodbank',   label: 'Blood Bank',       icon: Droplets },
   { id: 'lab',         label: 'Laboratory',       icon: FlaskConical },
   { id: 'staff',       label: 'Staff',            icon: Briefcase },
+  { id: 'roster',      label: 'Duty Roster',      icon: ClipboardList },
   { id: 'canteen',     label: 'Canteen',          icon: Utensils },
   { id: 'departments', label: 'Departments',      icon: Layers },
   { id: 'reports',     label: 'Analytics',        icon: BarChart3 },

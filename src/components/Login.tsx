@@ -39,6 +39,10 @@ const PAGE_NAME_TO_ROUTE: Record<string, string> = {
   'canteen':          'canteen',
   'departments':      'departments',
   'settings':         'settings',
+  'roster':           'roster',
+  'duty roster':      'roster',
+  'roaster':          'roster',
+  'duty roaster':     'roster',
 };
 
 function parsePages(pagesStr: string): string[] {
@@ -59,6 +63,7 @@ export default function Login({ onLogin }: LoginProps) {
   const [showPass, setShowPass] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,8 +101,8 @@ export default function Login({ onLogin }: LoginProps) {
         allowedPages: parsePages(matched[4] || ''),
       };
 
-      // Persist session in sessionStorage
-      sessionStorage.setItem('hms_user', JSON.stringify(user));
+      // Persist session in localStorage so user stays logged in across refreshes
+      localStorage.setItem('hms_user', JSON.stringify(user));
       onLogin(user);
     } catch (err: any) {
       setError(err.message || 'Login failed. Check your connection.');
